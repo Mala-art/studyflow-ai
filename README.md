@@ -61,8 +61,68 @@ http://localhost:5173
 Base URL:
 http://localhost:5001
 
-### Tasks
+## Tasks
 
+### GET /api/tasks
+Hämtar alla tasks
+
+### Response:
+```bash 
+[
+  {
+    "id": 1,
+    "title": "Learn React",
+    "course": "Frontend",
+    "status": "ongoing"
+  }
+]
+```
+### POST /api/tasks
+Skapar en ny task
+
+### Request:
+```bash
+{
+  "title": "Learn API",
+  "course": "Backend",
+  "status": "planned"
+}
+```
+### Response:
+```
+{
+  "id": 2,
+  "title": "Learn API",
+  "course": "Backend",
+  "status": "planned"
+}
+```
+### PUT /api/tasks/:id
+Uppdaterar en task
+
+### DELETE /api/tasks/:id
+Tar bort en task
+
+### 🤖 AI
+### POST /api/ai
+Test-route för AI-funktionalitet
+
+### Request:
+```
+{
+  "prompt": "ge mig en studieuppgift"
+}
+```
+
+### Response:
+```
+{
+  "message": "AI route is working",
+  "promptReceived": "ge mig en studieuppgift"
+}
+```
+
+## Available Endpoints
 ```bash
 GET /api/tasks
 POST /api/tasks
@@ -73,6 +133,6 @@ AI
 POST /api/ai
 ```
 
-💡 Purpose
+## 💡 Purpose
 
 This project is built as part of learning fullstack development and exploring how AI can be integrated into real-world applications in a controlled and secure way.
