@@ -78,7 +78,11 @@ http://localhost:5173
 ## 📡 API
 
 ### Base URL
-http://localhost:5001
+`http://localhost:5001` 
+
+### Full API documentation can be found here:  
+
+`backend/docs/api.md`
 
 ---
 
