@@ -1,49 +1,48 @@
 function validateTask(task) {
   const { title, course, status } = task;
 
-  if (
-    typeof title !== "string" ||
-    typeof course !== "string" ||
-    typeof status !== "string"
-  ) {
-    return {
-      error: "Title, course, and status must all be strings",
-      cleanTask: null,
-    };
+  // TYPKONTROLL
+  if (typeof title !== "string") {
+    return { error: "Title must be a string", cleanTask: null };
   }
 
+  if (typeof course !== "string") {
+    return { error: "Course must be a string", cleanTask: null };
+  }
+
+  if (typeof status !== "string") {
+    return { error: "Status must be a string", cleanTask: null };
+  }
+
+  // Trim
   const cleanTitle = title.trim();
   const cleanCourse = course.trim();
   const cleanStatus = status.trim();
 
-  if (!cleanTitle || !cleanCourse || !cleanStatus) {
-    return {
-      error: "Title, course, and status cannot be empty",
-      cleanTask: null,
-    };
+  // Loop-baserad validering
+  const fields = [
+    { value: cleanTitle, name: "Title", max: 200 },
+    { value: cleanCourse, name: "Course", max: 100 },
+    { value: cleanStatus, name: "Status", max: 50 },
+  ];
+
+  for (const field of fields) {
+    if (field.value.length === 0) {
+      return {
+        error: `${field.name} cannot be empty`,
+        cleanTask: null,
+      };
+    }
+
+    if (field.value.length > field.max) {
+      return {
+        error: `${field.name} is too long. Max ${field.max} characters allowed.`,
+        cleanTask: null,
+      };
+    }
   }
 
-  if (cleanTitle.length > 200) {
-    return {
-      error: "Title is too long. Max 200 characters allowed.",
-      cleanTask: null,
-    };
-  }
-
-  if (cleanCourse.length > 100) {
-    return {
-      error: "Course is too long. Max 100 characters allowed.",
-      cleanTask: null,
-    };
-  }
-
-  if (cleanStatus.length > 50) {
-    return {
-      error: "Status is too long. Max 50 characters allowed.",
-      cleanTask: null,
-    };
-  }
-
+  // RETURNERA REN DATA
   return {
     error: null,
     cleanTask: {
