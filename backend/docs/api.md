@@ -18,47 +18,22 @@ Check if the API is running.
 
 ## GET /api/tasks
 
-Fetch all tasks with optional filtering, sorting and pagination.
+Fetch all tasks with optional filtering, sorting, and pagination.
 
-## Query Parameters
+### Query Parameters
 
-### Parameter Type Description
+| Parameter | Type   | Description                      |
+| --------- | ------ | -------------------------------- |
+| course    | string | Filter by course                 |
+| status    | string | Filter by status                 |
+| sort      | string | Sort by title, course, or status |
+| limit     | number | Limit number of results          |
+| offset    | number | Skip a number of results         |
 
-course string Filter by course
-status string Filter by status
-sort string Sort by title, course, or status
-limit number Limit number of results
-offset number Skip a number of results
+### Example Request
 
-### Example
-
+```http
 GET /api/tasks?course=Backend&status=done&sort=title&limit=5&offset=0
-
-### Response (200)
-
-```json
-[
-  {
-    "id": 5,
-    "title": "Learn React",
-    "course": "Frontend",
-    "status": "ongoing"
-  }
-]
-```
-
-### Error Responses
-
-```json
-{
-  "error": "Invalid sort field"
-}
-```
-
-```json
-{
-  "error": "Failed to fetch tasks"
-}
 ```
 
 ## GET /api/tasks/:id
@@ -124,7 +99,7 @@ Create a new task.
 • Course max length: 100 characters
 • Status max length: 50 characters
 
-### Response (201)
+### Response (201 Created)
 
 ```json
 {
@@ -137,59 +112,15 @@ Create a new task.
 
 ### Error Responses
 
-```json
-{
-  "error": "Title must be a string"
-}
-```
+#### 400 Bad Request
 
 ```json
 {
-  "error": "Course must be a string"
+  "error": "Validation error message"
 }
 ```
 
-```json
-{
-  "error": "Status must be a string"
-}
-```
-
-```json
-{
-  "error": "Title cannot be empty"
-}
-```
-
-```json
-{
-  "error": "Course cannot be empty"
-}
-```
-
-```json
-{
-  "error": "Status cannot be empty"
-}
-```
-
-```json
-{
-  "error": "Title is too long. Max 200 characters allowed."
-}
-```
-
-```json
-{
-  "error": "Course is too long. Max 100 characters allowed."
-}
-```
-
-```json
-{
-  "error": "Status is too long. Max 50 characters allowed."
-}
-```
+#### 500 Internal Server Error
 
 ```json
 {
@@ -199,13 +130,64 @@ Create a new task.
 
 ---
 
+## GET /api/tasks/:id
+
+Fetch a single task by ID.
+
+### Example Request
+
+```http
+GET /api/tasks/5
+```
+
+### Response (200 OK)
+
+```json
+{
+  "id": 5,
+  "title": "Learn Express",
+  "course": "Backend",
+  "status": "planned"
+}
+```
+
+### Error Responses
+
+#### 400 Bad Request
+
+```json
+{
+  "error": "Invalid task ID"
+}
+```
+
+#### 404 Not Found
+
+```json
+{
+  "error": "Task not found"
+}
+```
+
+#### 500 Internal Server Error
+
+```json
+{
+  "error": "Failed to fetch task"
+}
+```
+
+---
+
 ## PUT /api/tasks/:id
 
 Update an existing task.
 
-### Example
+### Example Request
 
+```http
 PUT /api/tasks/5
+```
 
 ### Request Body
 
@@ -217,7 +199,7 @@ PUT /api/tasks/5
 }
 ```
 
-### Response (200)
+#### Response (200 OK)
 
 ```json
 {
@@ -230,47 +212,23 @@ PUT /api/tasks/5
 
 ### Error Responses
 
-```json
-{
-  "error": "Title must be a string"
-}
-```
+#### 400 Bad Request
 
 ```json
 {
-  "error": "Course must be a string"
+  "error": "Validation error message"
 }
 ```
 
-```json
-{
-  "error": "Status must be a string"
-}
-```
-
-```json
-{
-  "error": "Title cannot be empty"
-}
-```
-
-```json
-{
-  "error": "Course cannot be empty"
-}
-```
-
-```json
-{
-  "error": "Status cannot be empty"
-}
-```
+#### 404 Not Found
 
 ```json
 {
   "error": "Task not found"
 }
 ```
+
+#### 500 Internal Server Error
 
 ```json
 {
@@ -282,13 +240,15 @@ PUT /api/tasks/5
 
 ## DELETE /api/tasks/:id
 
-Delete a task
+Delete a task.
 
-### Example
+### Example Request
 
+```http
 DELETE /api/tasks/5
+```
 
-Response (200)
+#### Response (200 OK)
 
 ```json
 {
@@ -298,11 +258,15 @@ Response (200)
 
 ### Error Responses
 
+#### 404 Not Found
+
 ```json
 {
   "error": "Task not found"
 }
 ```
+
+#### 500 Internal Server Error
 
 ```json
 {
